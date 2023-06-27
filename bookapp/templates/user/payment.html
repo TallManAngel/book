@@ -1,0 +1,27 @@
+{%extends "user/layout.html"%}
+{% block header %}{%endblock%}
+
+{% block content %}
+    
+<div class="content" style="background-color: white;padding:3em">
+  
+   {{trxdeets}}
+
+    <form method="post" action="/paystack">
+
+        <p>{{trxdeets.don_amt}}</p>
+        <p>{{trxdeets.don_refno}}</p>
+        <button class="btn btn-danger">Confirm Donation</button>
+        <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+
+    </form>
+
+
+
+ </div>
+{%endblock%}
+
+{% block morecontent %}{% endblock morecontent%} 
+{% block featured %}{%endblock%}
+
+ 

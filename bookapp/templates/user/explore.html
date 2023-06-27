@@ -1,0 +1,102 @@
+{% extends "user/layout.html"%}
+
+
+{% block morecontent %}
+
+
+<div class="row">
+
+    <div class='col-3'>
+        <select id="category" class="form-select form-select-lg border-primary">
+
+            <option value="">Please Select</option>
+            {% for c in cats%}
+            <option value="{{c.cat_id}}">{{c.cat_name}}</option>
+            {%endfor%}
+        </select>
+
+    </div>
+
+
+    <div class='col-3'>
+        <input type="text" id="title" class='form-control form-control-lg border-primary'  placeholder="Type a keyword">
+
+    </div>
+
+
+
+    <div class='col-3'>
+        <button id="btnsearch" class="btn btn-outline-primary noround"> SEARCH</button> 
+
+    </div>
+
+</div>
+
+
+
+
+
+
+<div class="layout" id="partner">
+  
+    <div class="container px-4 " id="custom-cards">
+      <h2 class="pb-2 border-bottom">Explore Available Book </h2>
+      
+      <div class="row row-cols-1 row-cols-lg-4 align-items-stretch g-4 py-5">
+        {% for b in books%}
+        <div class="col">
+         <img src="{{url_for('static',filename='collections/'+b.book_cover)}}" class="img-fluid bk" alt="">    
+         <div >
+          <h6> <a href="/review/{{b.book_id}}">{{b.book_title}}</a></h6>
+          <p><i>{{b.catdeets.cat_name}}</i></p>
+          
+          <button class="btn btn-sm btn-warning">{{b.bookreviews|count}}</button>  
+          
+         </div>  
+         </div>
+         {%endfor%}
+
+
+        </div>
+    </div> 
+   </div>
+
+{% endblock morecontent %}
+
+
+{% block content %}
+{% endblock %}
+
+{% block featured %}
+{% endblock %}
+
+
+
+{% block customjs %}
+<script>
+$document().ready(function(){
+$('#btnsearch').click(function(){
+    var cat =$('#category').val()
+    var title =$('#title').val()
+    //make ajax call
+    data2send={"caregory":cat, "title":title}
+    $.ajax({
+        url:'/search/book'
+        data:data2send
+        type:'get',
+        success:function(rsp){alert(rsp)},
+        error:function(err){console.log(err)}
+        
+
+    })
+
+
+})
+
+    
+})
+
+</script>
+
+ {% endblock %}
+      
